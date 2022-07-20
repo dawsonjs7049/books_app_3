@@ -30,8 +30,10 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <div className={styles.loginBox}>
-                <h1 className={styles.h1}>Login</h1>
-                <div style={{textAlign:'center', backgroundColor: 'red', color: 'white', borderRadius: '5px'}}>{error}</div>
+                <h1 className={styles.h1}>Bookshelf</h1>
+                <div style={{height: '2px', backgroundColor: 'black', width: '85%', margin: 'auto'}}></div>
+                <h2 className={styles.h1}>Login</h2>
+                <div style={{textAlign:'center', backgroundColor: 'red', color: 'white', borderRadius: '5px', marginLeft: '10px', marginRight: '10px'}}>{error}</div>
                 <div className={styles.inputsBox}>
                     <div className={styles.inputContainer}>
                         <div className={styles.label}>Email</div>
