@@ -26,7 +26,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
     useEffect(() => {
 
         originalBooks = books;
-        console.log("SORT TYPE: " + sortType);
+
         switch(sortType) {
             case 'title':
                 sortByTitle();

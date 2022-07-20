@@ -14,9 +14,13 @@ export function UserAuthContextProvider({children}) {
 
     const [user, setUser] = useState();
 
+    // this allows us to refresh page without having user get logged out involuntarily
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
+            setLoading(false);
         });
 
         // when component is unmounted, cleanup by destroying this listener
@@ -33,7 +37,7 @@ export function UserAuthContextProvider({children}) {
 
     return (
         <userAuthContext.Provider value={{login, user, logout}}>
-            {children}
+            {!loading && children}
         </userAuthContext.Provider>
     )
 }
