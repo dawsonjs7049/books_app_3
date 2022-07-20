@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import StarRatingComponent from 'react-star-rating-component';
+import { db } from '../firebase';
+import { collection, addDoc } from "firebase/firestore";
 
 function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
 
@@ -25,6 +27,8 @@ function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
+    const booksCollectionRef = collection(db, "books");
+
     useEffect(() => {
         if(selectedBook)
         {
@@ -41,6 +45,42 @@ function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
     console.log("SELECTED BOOK: " + (selectedBook ? (JSON.stringify(selectedBook)) : ''));
 
     const handleBookSave = () => {
+
+        const data = {
+                        title: title,
+                        author: author,
+                        genre: genre,
+                        rating: rating,
+                        review: description,
+                        startDate: startDate,
+                        endDate: endDate,
+                        pages: pages,
+                        infoLink: infoLink,
+                        globalRating: globalRating,
+                        image: image
+                    };
+
+        const addBook = async () => {
+            await addDoc(booksCollectionRef, data);
+        }
+
+        addBook();
+
+        console.log("ADDED...");
+        setShowAddBookModal(false);
+        setImage('');
+        setTitle('');
+        setAuthor('');
+        setRating(0);
+        setGenre('');
+        setDescription('');
+        setStartDate('');
+        setEndDate('');
+        setDescription('');
+
+        successToast();
+
+
         // console.log("TITLE: " + title);
         // firebase
         //     .firestore()
@@ -78,13 +118,14 @@ function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
 
     return (
         // ON CLICK FOR MODAL CONTENT STOPS PROPOGATION (ON CLICK EVENTS OUTSIDE OF ITSELF), SO IF WE PRESS INSIDE IT, THE ONCLICK FOR THE MODAL CONTAINER DOESN'T FIRE
-        <div className={'addBookModalContainer ' +  ` ${show ? 'show' : ''}`} onClick={() => setShowAddBookModal(false)}>
-            <div className="addBookModalContent" onClick={(e) => e.stopPropagation()}>
+        // <div className={'addBookModalContainer ' +  ` ${show ? 'show' : ''}`} onClick={() => setShowAddBookModal(false)}>
+        <div className={'addBookModalContainer' + `${show ? " show" : ''}`} onClick={() => setShowAddBookModal(false)}>
+           <div className="addBookModalContent" onClick={(e) => e.stopPropagation()}>
                 <h2>Add Book to your Library</h2>
                 <hr></hr>
                 <div className={'bookModalInputsContainer'}>
                     <div style={{width: '50%'}}>
-                        <img className={'bookModalThumbnail'} src={myImage} />
+                        <img className={'bookModalThumbnail'} src={myImage} alt=""/>
                     </div>
                     <div className={'bookModalInputs'}>
                         <div>

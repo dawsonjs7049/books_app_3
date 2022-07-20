@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import StarRatingComponent from 'react-star-rating-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { db } from '../firebase';
+import { updateDoc, deleteDoc, doc } from "firebase/firestore";
 
 
 function LibraryCard({item, deleteToast, updateToast}) {
 
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
+    // const [title, setTitle] = useState('');
+    // const [author, setAuthor] = useState('');
     const [rating, setRating] = useState(parseInt(item.data.rating));
     const [genre, setGenre] = useState(item.data.genre);
     const [description, setDescription] = useState(item.data.review);
@@ -16,7 +18,27 @@ function LibraryCard({item, deleteToast, updateToast}) {
     const [endDate, setEndDate] = useState(item.data.endDate);
     const [disableEdit, setDisableEdit] = useState(true);
 
+    // const booksCollectionRef = collection(db, "books");
+
     const updateBook = () => {
+
+        const bookDoc = doc(db, "books", item.id);
+        const data =  
+                    {
+                        rating: rating,
+                        genre: genre,
+                        review: description,
+                        startDate: startDate,
+                        endDate: endDate
+                    };
+
+        const update = async () => {
+            await updateDoc(bookDoc, data);
+        }
+
+        update();
+        updateToast();
+
         // firebase
         //     .firestore()
         //     .collection('books')
@@ -35,6 +57,14 @@ function LibraryCard({item, deleteToast, updateToast}) {
     }
 
     const deleteBook = () => {
+
+        const bookDoc = doc(db, "books", item.id);
+        const deleteBookItem = async () => {
+            await deleteDoc(bookDoc);
+        }
+
+        deleteBookItem();
+        deleteToast();
         // console.log("INSIDE DELETE BOOK");
         // firebase
         //     .firestore()
@@ -95,9 +125,9 @@ function LibraryCard({item, deleteToast, updateToast}) {
     return (
         <div key={item.id} className="libraryCard" id={item.id} >
             <div className="libraryThumbnail">
-                <img src={item.data.image} />
+                <img src={item.data.image} alt=""/>
                 {
-                     item.data.endDate != '' &&
+                     item.data.endDate !== '' &&
                         
                         <div className="finishedCheck"><FontAwesomeIcon style={{width: '40px', height: '40px', color: 'white', margin: 'auto', padding: '5px'}} icon={faCheck} /></div>
                 }
