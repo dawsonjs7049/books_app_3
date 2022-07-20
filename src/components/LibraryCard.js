@@ -9,16 +9,12 @@ import { updateDoc, deleteDoc, doc } from "firebase/firestore";
 
 function LibraryCard({item, deleteToast, updateToast}) {
 
-    // const [title, setTitle] = useState('');
-    // const [author, setAuthor] = useState('');
     const [rating, setRating] = useState(parseInt(item.data.rating));
     const [genre, setGenre] = useState(item.data.genre);
     const [description, setDescription] = useState(item.data.review);
     const [startDate, setStartDate] = useState(item.data.startDate);
     const [endDate, setEndDate] = useState(item.data.endDate);
     const [disableEdit, setDisableEdit] = useState(true);
-
-    // const booksCollectionRef = collection(db, "books");
 
     const updateBook = () => {
 
@@ -38,22 +34,6 @@ function LibraryCard({item, deleteToast, updateToast}) {
 
         update();
         updateToast();
-
-        // firebase
-        //     .firestore()
-        //     .collection('books')
-        //     .doc(item.id)
-        //     .update(
-        //         {
-        //             rating: rating,
-        //             genre: genre,
-        //             review: description,
-        //             startDate: startDate,
-        //             endDate: endDate
-        //         }
-        //     );
-
-        // updateToast();
     }
 
     const deleteBook = () => {
@@ -65,16 +45,6 @@ function LibraryCard({item, deleteToast, updateToast}) {
 
         deleteBookItem();
         deleteToast();
-        // console.log("INSIDE DELETE BOOK");
-        // firebase
-        //     .firestore()
-        //     .collection('books')
-        //     .doc(item.id)
-        //     .delete();
-
-        // deleteToast();
-
-
     }
 
     // const mouseEnter = (e) => {
@@ -122,14 +92,15 @@ function LibraryCard({item, deleteToast, updateToast}) {
 
 
 
-    return (
+    return ( 
         <div key={item.id} className="libraryCard" id={item.id} >
+
             <div className="libraryThumbnail">
                 <img src={item.data.image} alt=""/>
                 {
                      item.data.endDate !== '' &&
                         
-                        <div className="finishedCheck"><FontAwesomeIcon style={{width: '40px', height: '40px', color: 'white', margin: 'auto', padding: '5px'}} icon={faCheck} /></div>
+                        <div className="finishedCheck"><FontAwesomeIcon style={{width: '35px', height: '35px', color: 'white', margin: 'auto', padding: '5px'}} icon={faCheck} /></div>
                 }
             </div>
             {

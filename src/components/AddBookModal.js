@@ -79,41 +79,6 @@ function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
         setDescription('');
 
         successToast();
-
-
-        // console.log("TITLE: " + title);
-        // firebase
-        //     .firestore()
-        //     .collection('books')
-        //     .add(
-        //         {
-        //             title: title,
-        //             author: author,
-        //             genre: genre,
-        //             rating: rating,
-        //             review: description,
-        //             startDate: startDate,
-        //             endDate: endDate,
-        //             pages: pages,
-        //             infoLink: infoLink,
-        //             globalRating: globalRating,
-        //             image: image
-        //         }
-        //     );
-
-        //     console.log("ADDED...");
-        //     setShowAddBookModal(false);
-        //     setImage('');
-        //     setTitle('');
-        //     setAuthor('');
-        //     setRating(0);
-        //     setGenre('');
-        //     setDescription('');
-        //     setStartDate('');
-        //     setEndDate('');
-        //     setDescription('');
-
-        //     successToast();
     }
 
     return (

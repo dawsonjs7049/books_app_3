@@ -433,21 +433,19 @@ button:hover {
   background-color: teal; 
   margin-bottom: 2rem;
   border-radius: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
 }
 
 .librarySearchContainer {
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100vw;
-  max-width: 1470px;
-  /* opacity: .95; */
+  width: 500px;
+  /* max-width: 1000px; */
   margin: auto;
   background-color: rgb(0, 150, 150);
   margin-bottom: 2rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-evenly;
   align-items: center;
@@ -459,36 +457,35 @@ button:hover {
   border: 1px solid rgba(204, 202, 202, 0.753);
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  /* display: inline-block; */
   background-color: rgba(238, 236, 236, 0.753);
-  width: 90%;
-  min-width: 400px;
+  width: 80%;
+  /* min-width: 200px; */
   padding-right: 1rem;
   padding-left: 1rem;
   height: 100%;
   font-size: 1rem;
   transition: all 0.5s ease-in-out;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: -8px 18px 29px -2px rgba(0,0,0,0.87);
+  -webkit-box-shadow: -8px 18px 29px -2px rgba(0,0,0,0.87);
+  -moz-box-shadow: -8px 18px 29px -2px rgba(0,0,0,0.87);
 } 
 
 .cancelSearchBtn {
   /* border: 2px solid teal; */
   border: 1px solid rgba(204, 202, 202, 0.753);
+  border-left: none;
   background-color: white;
   color: teal;
-  font-size: .85rem;
+  font-size: 1.1rem;
   height: 100%;
-  padding: 10px;
-  /* display: inline-block; */
-  /* background-color: rgba(238, 236, 236, 0.753); */
-  /* border: 1px solid rgba(204, 202, 202, 0.753); */
   width: 10%;
-  min-width: 3rem;
   transition: all .5s ease-in-out;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
   font-weight: bold;
+  box-shadow: 7px 11px 17px -11px rgba(0,0,0,0.61);
+  -webkit-box-shadow: 7px 11px 17px -11px rgba(0,0,0,0.61);
+  -moz-box-shadow: 7px 11px 17px -11px rgba(0,0,0,0.61);
 }
 
 .cancelSearchBtn:hover {
@@ -505,8 +502,12 @@ button:hover {
 
 .libraryInputContainer {
   height: 3rem;
-  width: 70%;
+  max-width: 80%;
   transition: all .5s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .libraryInputContainer:hover {
@@ -525,18 +526,15 @@ button:hover {
 }
 
 .librarySelect {
-  height: 3rem;
-  background-color: white;
-  color: black;
-  /* margin-left: 2rem; */
-  border: 1px solid rgba(204, 202, 202, 0.753);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 25%;
-  min-width: 8rem;
-  cursor: pointer;
+  font-weight: bold;
+  width: 12rem;
+  box-shadow: 2px 7px 22px -6px rgba(0,0,0,0.69);
+  -webkit-box-shadow: 2px 7px 22px -6px rgba(0,0,0,0.69);
+  -moz-box-shadow: 2px 7px 22px -6px rgba(0,0,0,0.69);
+}
+
+.librarySelect option {
+  margin: .5rem 0 .5rem 0;
 }
 
 @media only screen and (max-width: 800px) {
@@ -548,7 +546,7 @@ button:hover {
   }
 
   .librarySearchContainer {
-    width: 580px;
+    width: 450px;
     flex-wrap: wrap;
   }
 
@@ -607,13 +605,11 @@ button:hover {
 .finishedCheck {
   position: absolute;
   top: 0;
-  right: 0;
-  height: 40px;
-  width: 40px;
-  /* width: 100px;
-  height: 100px; */
-  background-color: green;
-  border-bottom-left-radius: 5px;
+  left: 0;
+  height: 35px;
+  width: 35px;
+  background-color: rgb(23, 107, 23);
+  border-bottom-right-radius: 5px;
 }
 
 .libraryBody {

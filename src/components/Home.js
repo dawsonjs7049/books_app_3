@@ -7,7 +7,7 @@ import AddBookModal from './AddBookModal';
 import MyLibrary from "./MyLibrary";
 import { useUserAuth } from '../context/UserAuthContext';
 import { db } from '../firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 
 
 function Home()
@@ -18,7 +18,7 @@ function Home()
 
     const bookCollectionRef = collection(db, "books");
    
-    const { user, auth } = useUserAuth();
+    // const { user, auth } = useUserAuth();
 
     const successToast = () => toast("Successfully Added Book!", {
         duration: 4000,
@@ -43,22 +43,44 @@ function Home()
 
     useEffect(() => {
 
-        const getBooks = async () => {
-            const data = await getDocs(bookCollectionRef)
-                console.log("BOOKS: " + JSON.stringify(data));
-            const books = data.docs.map(doc => {
-                return { 
-                    id : doc.id,
-                    data: doc.data()
-                }
+        // const getBooks = async () => {
+        //     const data = await getDocs(bookCollectionRef)
+        //         console.log("BOOKS: " + JSON.stringify(data));
+        //     const books = data.docs.map(doc => {
+        //         return { 
+        //             id : doc.id,
+        //             data: doc.data()
+        //         }
+        //     });
+
+        //     setMyBooks(books);
+        // }
+
+        // getBooks();
+
+        const q = query(collection(db, "books"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const books = [];
+    
+            querySnapshot.forEach((doc) => {
+                books.push({ id: doc.id, data: doc.data() });
             });
-
+    
             setMyBooks(books);
-        }
-
-        getBooks();
+        })
 
     }, [])
+
+    // const q = query(collection(db, "books"));
+    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    //     const books = [];
+
+    //     querySnapshot.forEach((doc) => {
+    //         books.push({ id: doc.id, data: doc.data() });
+    //     });
+
+    //     setMyBooks(books);
+    // })
 
     return (
         <>            

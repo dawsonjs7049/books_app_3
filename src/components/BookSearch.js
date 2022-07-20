@@ -85,7 +85,7 @@ function BookSearch(props) {
     return (
         <div className="bookSearch">
 
-            <h1 style={{width: '100%', textAlign:'center', color: 'teal'}}>Search for Books <FontAwesomeIcon icon={faBookmark} /></h1>
+            <h1 style={{width: '100%', textAlign:'center', color: 'teal'}}>Search for Books</h1>
             <div className="searchBar"></div>
             
             <div className="bookSearchInputs">

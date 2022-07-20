@@ -1,55 +1,52 @@
 import React, { useState, useEffect } from "react";
 
-import StarRatingComponent from 'react-star-rating-component';
 import LibraryCard from "../components/LibraryCard";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook } from '@fortawesome/free-solid-svg-icons'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faCommentDollar } from '@fortawesome/free-solid-svg-icons'
+import Select from 'react-select'
 
 function MyLibrary({books, deleteToast, updateToast}) {
 
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [rating, setRating] = useState('');
-    const [genre, setGenre] = useState('');
-    const [description, setDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [disableEdit, setDisableEdit] = useState(true);
-
     const [sortedBooks, setSortedBooks] = useState([]);
+    const [sortType, setSortType] = useState('title');
     
+    const sortOptions = [
+        { value: 'title', label: 'Title' },
+        { value: 'author', label: 'Author' },
+        { value: 'rating', label: 'Rating' },
+        { value: 'finished', label: 'Finished' },
+        { value: 'unfinished', label: 'Unfinished' },
+        { value: 'date_started', label: 'Date Started' },
+        { value: 'date_finished', label: 'Date Finished' }
+    ]
+
     let originalBooks = books;
-    
+
     useEffect(() => {
 
         originalBooks = books;
-
-        let select = document.getElementById('sortSelect');
-        let sort = select.value; 
-
-        switch(sort) {
-            case 'Title':
+        console.log("SORT TYPE: " + sortType);
+        switch(sortType) {
+            case 'title':
                 sortByTitle();
                 break;
-            case 'Author':
+            case 'author':
                 sortByAuthor();
                 break;
-            case 'Date Started':
+            case 'date_started':
                 sortByDayStarted();
                 break;
-            case 'Date Finished':
+            case 'date_finished':
                 sortByDayFinished();
                 break;
-            case 'Finished':
+            case 'finished':
                 sortByFinished();
                 break;
-            case 'Unfinished':
+            case 'unfinished':
                 sortByUnfinished();
                 break;
-            case 'Rating':
+            case 'rating':
                 sortByRating();
                 break;
             default:
@@ -57,34 +54,37 @@ function MyLibrary({books, deleteToast, updateToast}) {
                 break;
         }
 
-        console.log("SORT VALUE: " + sort);
-        console.log("BOOKS AFTER EFFECT SORT: " + JSON.stringify(books));
     }, [books])
 
+    const handleSortSelect = (event) => {
+
+        setSortType(event.value);
+
+        handleSort(event.value);
+    }
+
     const handleSort = (type) => {
-        let select = document.getElementById('sortSelect');
-        let sort = select.value; 
 
         switch(type) {
-            case 'Title':
+            case 'title':
                 sortByTitle();
                 break;
-            case 'Author':
+            case 'author':
                 sortByAuthor();
                 break;
-            case 'Date Started':
+            case 'date_started':
                 sortByDayStarted();
                 break;
-            case 'Date Finished':
+            case 'date_finished':
                 sortByDayFinished();
                 break;
-            case 'Finished':
+            case 'finished':
                 sortByFinished();
                 break;
-            case 'Unfinished':
+            case 'unfinished':
                 sortByUnfinished();
                 break;
-            case 'Rating':
+            case 'rating':
                 sortByRating();
                 break;
             default:
@@ -92,12 +92,9 @@ function MyLibrary({books, deleteToast, updateToast}) {
                 break;
         }
 
-        console.log("SORT VALUE: " + sort);
-        console.log("BOOKS AFTER EFFECT SORT: " + JSON.stringify(books));
     }
 
     const sortByTitle = () => {
-
         let sorted = [];
 
         sorted = originalBooks.sort((a,b) => {
@@ -127,8 +124,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
             return 0;
         });
-        console.log("AFTER AUTHOR SORT: " + JSON.stringify(sorted));
-        // books = sorted;
+
         setSortedBooks([...sorted]);
     }
 
@@ -144,7 +140,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
             return 0;
         });
-        console.log("AFTER DAY STARTED SORT: " + JSON.stringify(sorted));
+
         setSortedBooks([...sorted]);
     }
 
@@ -160,7 +156,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
             return 0;
         });
-        console.log("AFTER DAY FINISHED SORT: " + JSON.stringify(sorted));
+
         setSortedBooks([...sorted]);
     }
 
@@ -169,7 +165,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
         filtered = originalBooks.filter((book) => book.data.endDate != '');
 
-        console.log("AFTER FILTER BY FINISHED: " + JSON.stringify(filtered));
         setSortedBooks([...filtered]);
     }
 
@@ -178,7 +173,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
         filtered = originalBooks.filter((book) => book.data.endDate == '');
 
-        console.log("AFTER FILTER BY UNFINISHED: " + JSON.stringify(filtered));
         setSortedBooks([...filtered]);
     }
 
@@ -194,7 +188,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
             return 0;
         });
-        console.log("AFTER RATING SORT: " + JSON.stringify(sorted));
 
         // books = sorted;
         setSortedBooks([...sorted]);
@@ -209,22 +202,18 @@ function MyLibrary({books, deleteToast, updateToast}) {
             let searchWords = e.target.value.split(" ");
 
             searchWords = searchWords.filter(word => word.length > 1);
-            console.log("SEARCH WORDS: " + JSON.stringify(searchWords));
-            // let searchWords = e.target.value.split(" ");
+
             if(searchWords.length > 0)
             {
                 let filtered = originalBooks.filter((book) => {
                     let title = book.data.title.toLowerCase();
                     let author = book.data.author.toLowerCase();
-                    console.log("TITLE: " + title + " - AUTHOR: " + author);
     
                     return searchWords.some(searchWord => {
-                        console.log("SEARCH WORD: " + searchWord + " - TITLE: " + title + " - AUTHOR: " + author);
                         return (title.includes(searchWord.toLowerCase()) || author.includes(searchWord.toLowerCase()))
                     })
                 });
                     
-                console.log("SEARCH FILTERED: " + JSON.stringify(filtered));
                 setSortedBooks([...filtered]);
             }
         }
@@ -234,7 +223,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
             select.value = 'Title';
 
             handleSort();
-            // setSortedBooks([...originalBooks])
         }
     }
 
@@ -251,7 +239,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
  
     return (
         <div className="libraryContainer">
-            <h1 style={{width: '100%', textAlign:'center', color: 'white'}}>My Library <FontAwesomeIcon icon={faBook} /></h1>
+            <h1 style={{width: '100%', textAlign:'center', color: 'white'}}>My Library <FontAwesomeIcon icon={faBookmark} /></h1>
             <div className="libraryBar"></div>
             <div className="librarySearchContainer">
                 <div className="libraryInputContainer">
@@ -259,15 +247,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
                     <button className="cancelSearchBtn" onClick={() => handleClearSearch()}>X</button>
                 </div>
                 <div>
-                    <select className="librarySelect" id="sortSelect">
-                        <option onClick={() => sortByTitle()}>Title</option>
-                        <option onClick={() => sortByAuthor()}>Author</option>
-                        <option onClick={() => sortByRating()}>Rating</option>
-                        <option onClick={() => sortByFinished()}>Finished</option>
-                        <option onClick={() => sortByUnfinished()}>Unfinished</option>
-                        <option onClick={() => sortByDayStarted()}>Date Started</option>
-                        <option onClick={() => sortByDayFinished()}>Date Finished</option>
-                    </select>
+                    <Select className="librarySelect" id="sortSelect" options={sortOptions} onChange={(event) => handleSortSelect(event)} />
                 </div>
                 
             </div>
@@ -278,10 +258,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
                     sortedBooks.map((item) => (
                         <LibraryCard item={item} key={item.id} deleteToast={deleteToast} updateToast={updateToast}/>
                     ))
-                // books.length > 0 ?
-                //     books.map((item) => (
-                //         <LibraryCard item={item} key={item.id}/>
-                //     ))
                 
                 :
                     "EMPTY"
