@@ -260,7 +260,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  z-index: 10000;
   opacity: 0;
   transition: all .3s ease-in-out;
   pointer-events: none;
