@@ -10,12 +10,18 @@ function App() {
   return (
     <UserAuthContextProvider>
       <Routes>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+{/* 
+
         <Route path="/" element={<Login />} />
         <Route path="/home" element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>} 
-        />
+        /> */}
       </Routes>
     </UserAuthContextProvider>
 

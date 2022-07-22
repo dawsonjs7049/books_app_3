@@ -19,7 +19,7 @@ export default function Home() {
         try 
         {
             await login(email, password);
-            navigate("/home");
+            navigate("/");
         }
         catch (error)
         {
