@@ -24,7 +24,9 @@ export function UserAuthContextProvider({children}) {
         });
 
         // when component is unmounted, cleanup by destroying this listener
-        return unsubscribe();
+        return () => {
+            unsubscribe();
+        };
     }, [])
 
     function login(email, password) {

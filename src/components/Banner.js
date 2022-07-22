@@ -14,8 +14,7 @@ function Banner(){
         try 
         {
             await logout();
-            navigate("/");
-            console.log("LOGGED OUT");
+            navigate("/login");
         }
         catch (error)
         {
