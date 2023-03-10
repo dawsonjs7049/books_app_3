@@ -47,51 +47,6 @@ function LibraryCard({item, deleteToast, updateToast}) {
         deleteToast();
     }
 
-    // const mouseEnter = (e) => {
-
-
-    //     let id = e.currentTarget.id;
-
-    //     let book = document.getElementById(id);
-    //     // book.style.width = '550px';
-
-        
-    //     book.style.width = '550px';
-    
-
-    //     setTimeout(() => {            
-    //         setShowBody(true);
-    //     }, 350)
-
-    //     clearTimeout();
-        
-
-
-      
-    // }
-
-    // const mouseLeave = (e) => {
-
-    //     let id = e.currentTarget.id;
-    //     let book = document.getElementById(id);
-
-        
-    //     setTimeout(() => {
-    //         if(e.target.id != 'startPicker' && e.target.id != 'endPicker')
-    //         {
-    //             book.style.width = '225px';
-
-    //             setShowBody(false);
-                
-    //         }
-    //     }, 351)
-
-    //     clearTimeout();
-
-    // }
-
-
-
     return ( 
         <div key={item.id} className="libraryCard" id={item.id} >
 

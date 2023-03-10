@@ -5,7 +5,6 @@ import Banner from "./Banner";
 import BookSearch from './BookSearch';
 import AddBookModal from './AddBookModal';
 import MyLibrary from "./MyLibrary";
-import { useUserAuth } from '../context/UserAuthContext';
 import { db } from '../firebase';
 import { collection, query, onSnapshot } from "firebase/firestore";
 
@@ -15,10 +14,6 @@ function Home()
     const [selectedBook, setSelectedBook] = useState();
     const [showAddBookModal, setShowAddBookModal] = useState(false);
     const [myBooks, setMyBooks] = useState([]);
-
-    const bookCollectionRef = collection(db, "books");
-   
-    // const { user, auth } = useUserAuth();
 
     const successToast = () => toast("Successfully Added Book!", {
         duration: 4000,
@@ -43,21 +38,6 @@ function Home()
 
     useEffect(() => {
 
-        // const getBooks = async () => {
-        //     const data = await getDocs(bookCollectionRef)
-        //         console.log("BOOKS: " + JSON.stringify(data));
-        //     const books = data.docs.map(doc => {
-        //         return { 
-        //             id : doc.id,
-        //             data: doc.data()
-        //         }
-        //     });
-
-        //     setMyBooks(books);
-        // }
-
-        // getBooks();
-
         const q = query(collection(db, "books"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const books = [];
@@ -71,23 +51,11 @@ function Home()
 
     }, [])
 
-    // const q = query(collection(db, "books"));
-    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    //     const books = [];
-
-    //     querySnapshot.forEach((doc) => {
-    //         books.push({ id: doc.id, data: doc.data() });
-    //     });
-
-    //     setMyBooks(books);
-    // })
-
     return (
         <>            
             <Banner />
             <BookSearch setSelectedBook={setSelectedBook} setShowAddBookModal={setShowAddBookModal}/>
             <AddBookModal selectedBook={selectedBook} show={showAddBookModal} setShowAddBookModal={setShowAddBookModal} successToast={successToast}/>
-        
         
             <MyLibrary books={myBooks} deleteToast={deleteToast} updateToast={updateToast}/>
             <Toaster />

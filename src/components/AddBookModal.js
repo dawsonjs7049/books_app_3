@@ -89,7 +89,7 @@ function AddBookModal({selectedBook, show, setShowAddBookModal, successToast}){
                 <h2>Add Book to your Library</h2>
                 <hr></hr>
                 <div className={'bookModalInputsContainer'}>
-                    <div style={{width: '50%'}}>
+                    <div style={{width: '40%'}}>
                         <img className={'bookModalThumbnail'} src={myImage} alt=""/>
                     </div>
                     <div className={'bookModalInputs'}>

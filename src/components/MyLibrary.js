@@ -106,9 +106,7 @@ function MyLibrary({books, deleteToast, updateToast}) {
 
             return 0;
         });
-        console.log("AFTER TITLE SORT: " + JSON.stringify(sorted));
 
-        // books = sorted;
         setSortedBooks([...sorted]);
     }
 
@@ -253,7 +251,6 @@ function MyLibrary({books, deleteToast, updateToast}) {
             </div>
             <div className="libraryCards">
             {
-                
                 sortedBooks ?
                     sortedBooks.map((item) => (
                         <LibraryCard item={item} key={item.id} deleteToast={deleteToast} updateToast={updateToast}/>
